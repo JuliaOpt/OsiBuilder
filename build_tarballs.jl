@@ -17,10 +17,18 @@ script = raw"""
 cd $WORKSPACE/srcdir
 cd Osi-releases-0.107.9/
 update_configure_scripts
+# temporary fix
+for path in ${LD_LIBRARY_PATH//:/ }; do
+    for file in $(ls $path/*.la); do
+        echo "$file"
+        baddir=$(sed -n "s|libdir=||p" $file)
+        sed -i~ -e "s|$baddir|'$path'|g" $file
+    done
+done
 mkdir build
 cd build/
-export LDFLAGS="-L${prefix}/lib -lcoinglpk"
-../configure --prefix=$prefix --with-pic --disable-pkg-config --with-blas="-L${prefix}/lib -lcoinblas -lgfortran" --host=${target} --enable-shared --enable-static --enable-dependency-linking lt_cv_deplibs_check_method=pass_all --with-glpk-lib="-L${prefix}/lib -lcoinglpk" --with-glpk-incdir="$prefix/include/coin/ThirdParty" --with-lapack="-L${prefix}/lib -lcoinlapack" --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin"
+#export LDFLAGS="-L${prefix}/lib -lcoinglpk"
+../configure --prefix=$prefix --with-pic --disable-pkg-config --with-blas="-L${prefix}/lib -lcoinblas" --host=${target} --enable-shared --disable-static --enable-dependency-linking lt_cv_deplibs_check_method=pass_all --with-glpk-lib="-L${prefix}/lib -lcoinglpk" --with-glpk-incdir="$prefix/include/coin/ThirdParty" --with-lapack="-L${prefix}/lib -lcoinlapack" --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin"
 make -j${nproc}
 make install
 
@@ -49,13 +57,14 @@ products(prefix) = [
     LibraryProduct(prefix, "libOsi", :libOsi),
     LibraryProduct(prefix, "libOsiCommonTests", :libOsiCommonTests)
 ]
+platforms = expand_gcc_versions(platforms)
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    "https://github.com/JuliaOpt/COINGLPKBuilder/releases/download/v1.10.5/build_COINGLPKBuilder.v1.10.5.jl",
-    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.10.14/build_CoinUtilsBuilder.v2.10.14.jl",
-    "https://github.com/JuliaOpt/COINBLASBuilder/releases/download/v1.4.6/build_COINBLASBuilder.v1.4.6.jl",
-    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.5.6/build_COINLapackBuilder.v1.5.6.jl"
+    "https://github.com/JuliaOpt/COINGLPKBuilder/releases/download/v1.10.5-1/build_COINGLPKBuilder.v1.10.5.jl",
+    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.10.14-1/build_CoinUtilsBuilder.v2.10.14.jl",
+    "https://github.com/JuliaOpt/COINBLASBuilder/releases/download/v1.4.6-1/build_COINBLASBuilder.v1.4.6.jl",
+    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.5.6-1/build_COINLapackBuilder.v1.5.6.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
