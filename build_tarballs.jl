@@ -27,7 +27,7 @@ for path in ${LD_LIBRARY_PATH//:/ }; do
 done
 mkdir build
 cd build/
-#export LDFLAGS="-L${prefix}/lib -lcoinglpk"
+export LDFLAGS="-L${prefix}/lib -lcoinglpk"
 ../configure --prefix=$prefix --with-pic --disable-pkg-config --with-blas="-L${prefix}/lib -lcoinblas" --host=${target} --enable-shared --disable-static --enable-dependency-linking lt_cv_deplibs_check_method=pass_all --with-glpk-lib="-L${prefix}/lib -lcoinglpk" --with-glpk-incdir="$prefix/include/coin/ThirdParty" --with-lapack="-L${prefix}/lib -lcoinlapack" --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin"
 make -j${nproc}
 make install
