@@ -35,8 +35,8 @@ if [ $target = "x86_64-apple-darwin14" ]; then
 fi
 ../configure --prefix=$prefix --with-pic --disable-pkg-config --host=${target} --disable-shared --enable-static --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
 --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
---with-lapack="-L${prefix}/lib -lcoinlapack" \
---with-blas="-L${prefix}/lib -lcoinblas"
+--with-lapack-lib="-L${prefix}/lib -lcoinlapack" \
+--with-blas-lib="-L${prefix}/lib -lcoinblas"
 ## STATIC BUILD END
 
 ## DYNAMIC BUILD START
@@ -82,9 +82,9 @@ push!(platforms, Windows(:x86_64,compiler_abi=CompilerABI(:gcc6)))
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.10.14-1/build_CoinUtilsBuilder.v2.10.14.jl",
-    "https://github.com/JuliaOpt/COINBLASBuilder/releases/download/v1.4.6-1/build_COINBLASBuilder.v1.4.6.jl",
-    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.5.6-1/build_COINLapackBuilder.v1.5.6.jl"
+    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.10.14-1-static/build_CoinUtilsBuilder.v2.10.14.jl",
+    "https://github.com/JuliaOpt/COINBLASBuilder/releases/download/v1.4.6-1-static/build_COINBLASBuilder.v1.4.6.jl",
+    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.5.6-1-static/build_COINLapackBuilder.v1.5.6.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
