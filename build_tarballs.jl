@@ -33,6 +33,11 @@ export CXXFLAGS="-std=c++11"
 if [ $target = "x86_64-apple-darwin14" ]; then
   export AR=/opt/x86_64-apple-darwin14/bin/x86_64-apple-darwin14-ar
 fi
+
+if [ $target = "aarch64-linux-gnu" ] || [ $target = "arm-linux-gnueabihf" ]; then 
+   export CPPFLAGS="-std=c++11"
+fi
+
 ../configure --prefix=$prefix --with-pic --disable-pkg-config --host=${target} --disable-shared --enable-static --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
 --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
 --with-lapack-lib="-L${prefix}/lib -lcoinlapack" \
