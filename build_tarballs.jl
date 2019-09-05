@@ -3,19 +3,19 @@
 using BinaryBuilder
 
 name = "OsiBuilder"
-version = v"0.107.9"
+version = v"0.108.5"
 
 # Collection of sources required to build OsiBuilder
 sources = [
-    "https://github.com/coin-or/Osi/archive/releases/0.107.9.tar.gz" =>
-    "e2c8a0ee4a2a0abe7475d67f7f98230e8bfbbcb6e74487877e757c996bfd6d30",
+    "https://github.com/coin-or/Osi/archive/releases/0.108.5.tar.gz" =>
+    "c9a6f098e2824883bb3ec1f12df5987b7a8da0f1241988a5dd4663ac362e6381",
 
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
-cd Osi-releases-0.107.9/
+cd Osi-releases-0.108.5/
 update_configure_scripts
 # temporary fix
 for path in ${LD_LIBRARY_PATH//:/ }; do
@@ -82,9 +82,9 @@ push!(platforms, Windows(:x86_64,compiler_abi=CompilerABI(:gcc6)))
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.10.14-1-static/build_CoinUtilsBuilder.v2.10.14.jl",
+    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.11.3-static/build_CoinUtilsBuilder.v2.11.3.jl",
     "https://github.com/JuliaOpt/COINBLASBuilder/releases/download/v1.4.6-1-static/build_COINBLASBuilder.v1.4.6.jl",
-    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.5.6-1-static/build_COINLapackBuilder.v1.5.6.jl"
+    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.6.0-static/build_COINLapackBuilder.v1.6.0.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
